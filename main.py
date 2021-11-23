@@ -91,7 +91,7 @@ def sendInlineMessageForBookingTime(chat_id):
         keyboard={'keyboard':[
                             [{'text':'18:00'}],[{'text':'20:00'}],
                             ]}
-           elif 18<=int(current_hour)<20:
+    elif 18<=int(current_hour)<20:
         keyboard={'keyboard':[
                             [{'text':'20:00'}],
                             ]}
