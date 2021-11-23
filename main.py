@@ -115,6 +115,8 @@ def run():
         else:
             if current_last_msg=='/start':
                 sendInlineMessageForService(chat_id)   
+                if current_last_msg=='/cancel':
+                sendMessage(chat_id,"Booking Cancel , /start to run bot again..!!")
             if current_last_msg in ['General Physician','Cardiologist','Dentist','Dermatologists','Gynecologists','Orthopedic Surgeons']:
                 event_description=current_last_msg
                 sendInlineMessageForBookingTime(chat_id)
@@ -122,8 +124,7 @@ def run():
                 booking_time=current_last_msg
                 update_id_for_booking_of_time_slot=current_update_id
                 sendMessage(chat_id,"Please enter email address:")
-            if current_last_msg=='/cancel':
-                sendMessage(chat_id,"Booking Cancel , /start to run bot again..!!")
+            
                 update_id_for_booking_of_time_slot=''
                 # return
                 continue
