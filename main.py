@@ -58,7 +58,7 @@ def sendInlineMessageForService(chat_id):
 
 def sendInlineMessageForBookingTime(chat_id):
     text_message1='Available Doctors...'
-    if str='General Physician':
+    if str == 'General Physician':
         keyboard={'keyboard':[
                             [{'text':'Doc. A'}],[{'text':'Doc B'}],
                             [{'text':'Doc C'}],[{'text':'Doc D'}],
