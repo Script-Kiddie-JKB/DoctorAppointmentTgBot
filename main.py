@@ -57,8 +57,16 @@ def sendInlineMessageForService(chat_id):
     return response
 
 def sendInlineMessageForBookingTime(chat_id):
+    text_message1='Available Doctors...'
+    if str='General Physician':
+        keyboard={'keyboard':[
+                            [{'text':'Doc. A'}],[{'text':'Doc B'}],
+                            [{'text':'Doc C'}],[{'text':'Doc D'}],
+                            [{'text':'Doc E'}],
+                            ]}
+    
     text_message='Please choose a time slot...'
-    text_message1='Doctors '
+   
     current_time=datetime.datetime.now()
     current_hour=str(current_time)[11:13]
     # ----------- Chunk of if statement to determine which inline keyboard to reply user ----------------
