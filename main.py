@@ -58,7 +58,7 @@ def sendInlineMessageForService(chat_id):
 
 def sendInlineMessageForBookingTime(chat_id):
     text_message='Please choose a time slot...'
-     text_message1='Doctors '
+    text_message1='Doctors '
     current_time=datetime.datetime.now()
     current_hour=str(current_time)[11:13]
     # ----------- Chunk of if statement to determine which inline keyboard to reply user ----------------
