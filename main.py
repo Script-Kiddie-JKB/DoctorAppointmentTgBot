@@ -60,7 +60,7 @@ def sendInlineMessageForBookingTime(chat_id):
     text_message1='Available Doctors...'
     str1 = 'General Physician' or 'Cardiologist' or 'Dentist' or 'Dermatologists' or 'Gynecologists' or 'Orthopedic Surgeons'
     if str == str1:
-       print " 1. Doc A \n 2. Doc B \n 3. Doc C \n 4. Doc D"
+       print (" 1. Doc A \n 2. Doc B \n 3. Doc C \n 4. Doc D")
         
     text_message='Please choose a time slot...'
    
