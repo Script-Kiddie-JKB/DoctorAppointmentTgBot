@@ -47,7 +47,7 @@ def sendMessage(chat_id,text_message):
 def sendInlineMessageForService(chat_id):
     text_message='Hi! I am your Booking Appointments Bot!\nI can help you book an appointment.\n\nYou can control me using these commands\n\n/start-to start chatting with the bot\n/cancel-to stop chatting with the bot.\n\nFor more information please contact MultiSpecialityHospital@gmail.com'
     keyboard={'keyboard':[
-                        [{'text':'General Physician'{'text':['Doc. XYZ','Doc.ABC','Doc. PQR']}},{'text':'Cardiologist'{'text':['Doc. XYZ','Doc.ABC','Doc. PQR']}}],
+                        [{'text':'General Physician'},{'text':['Doc. XYZ','Doc.ABC','Doc. PQR']},{'text':'Cardiologist'},{'text':['Doc. XYZ','Doc.ABC','Doc. PQR']}}],
                         [{'text':'Dentist'},{'text':'Dermatologists'}],
                         [{'text':'Gynecologists'},{'text':'Orthopedic Surgeons'}]
                         ]}
