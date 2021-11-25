@@ -67,31 +67,7 @@ def sendInlineMessageForBookingTime(chat_id):
                             [{'text':'12:00'}],[{'text':'14:00'}],
                             [{'text':'16:00'}],[{'text':'18:00'}],
                             ]}
-    elif 8<=int(current_hour)<10:
-        keyboard={'keyboard':[
-                            [{'text':'10:00'}],
-                            [{'text':'12:00'}],[{'text':'14:00'}],
-                            [{'text':'16:00'}],[{'text':'18:00'}],
-                            ]}
-    elif 10<=int(current_hour)<12:
-        keyboard={'keyboard':[
-                            [{'text':'12:00'}],[{'text':'14:00'}],
-                            [{'text':'16:00'}],[{'text':'18:00'}],
-                            ]}
-    elif 12<=int(current_hour)<14:
-        keyboard={'keyboard':[
-                            [{'text':'14:00'}],
-                            [{'text':'16:00'}],[{'text':'18:00'}],
-                            ]}
-    elif 14<=int(current_hour)<16:
-        keyboard={'keyboard':[
-                            [{'text':'16:00'}],[{'text':'18:00'}],
-                            ]}
-    elif 16<=int(current_hour)<18:
-        keyboard={'keyboard':[
-                            [{'text':'18:00'}],[{'text':'20:00'}],
-                            ]}
-    elif 18<=int(current_hour)<20:
+    elif 8<=int(current_hour)<20:
         keyboard={'keyboard':[
                             [{'text':'20:00'}],
                             ]}
