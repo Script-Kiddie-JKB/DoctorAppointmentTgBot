@@ -58,7 +58,7 @@ def sendInlineMessageForService(chat_id):
 
 def sendInlineMessageForBookingTime(chat_id):
     text_message1='Available Doctors...'
-    if str == 'General Physician':
+    if str = 'General Physician':
         text_message2 = " 1. Doc A \n 2. Doc B \n 3. Doc C \n 4. Doc D"
         
     text_message='Please choose a time slot...'
