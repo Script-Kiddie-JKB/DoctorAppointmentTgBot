@@ -10,7 +10,7 @@ from google.auth.transport.requests import Request
 # SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-def book_timeslot(event_description,booking_time,input_email):
+def book_timeslot(event_description,booking_time,input_email,doc_name):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
@@ -51,7 +51,7 @@ def book_timeslot(event_description,booking_time,input_email):
         event = {
         'summary': 'Doctors Appointment',
         'location': 'Delhi',
-        'description': str(event_description) + ' at Multi Speciality Hospital',
+        'description': str(doc_name) +'of '+str(event_description) +'at '+ str(start_time)+' at Multi Speciality Hospital',
         'start': {
         'dateTime': start_time,
         'timeZone': 'Asia/Calcutta',
