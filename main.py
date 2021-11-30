@@ -57,13 +57,8 @@ def sendInlineMessageForService(chat_id):
     return response
 
 def sendInlineMessageForBookingTime(chat_id):
-    text_message1='Available Doctors...'
-    str1 = 'General Physician' or 'Cardiologist' or 'Dentist' or 'Dermatologists' or 'Gynecologists' or 'Orthopedic Surgeons'
-    if str == str1:
-       print (" 1. Doc A \n 2. Doc B \n 3. Doc C \n 4. Doc D")
-        
     text_message='Please choose a time slot...'
-   
+     text_message1='Doctors '
     current_time=datetime.datetime.now()
     current_hour=str(current_time)[11:13]
     # ----------- Chunk of if statement to determine which inline keyboard to reply user ----------------
@@ -107,10 +102,8 @@ def sendInlineMessageForBookingTime(chat_id):
     key=json.JSONEncoder().encode(keyboard)
     url='https://api.telegram.org/bot'+str(api_key)+'/sendmessage?chat_id='+str(chat_id)+'&text='+str(text_message)+'&reply_markup='+key
     url1='https://api.telegram.org/bot'+str(api_key)+'/sendmessage?chat_id='+str(chat_id)+'&text='+str(text_message1)+'&reply_markup='+key
-    ##url2='https://api.telegram.org/bot'+str(api_key)+'/sendmessage?chat_id='+str(chat_id)+'&text='+str(text_message2)+'&reply_markup='+key
     response = requests.get(url)
     response = requests.get(url1)
-    ##response = requests.get(url2)
     return response
 
 
