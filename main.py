@@ -23,7 +23,7 @@ def getLastMessage():
     url = "https://api.telegram.org/bot{}/getUpdates".format(api_key)
     response = requests.get(url)
     data=response.json()
-    last_msg = data['result'][len(data['result'])-1]['message']['text']
+    last_msg=data['result'][len(data['result'])-1]['message']['text']
     chat_id=data['result'][len(data['result'])-1]['message']['chat']['id']
     update_id=data['result'][len(data['result'])-1]['update_id']
     if len(data['result']) < 100:
@@ -45,7 +45,7 @@ def sendMessage(chat_id,text_message):
     return response
 
 def sendInlineMessageForService(chat_id):
-    text_message='Hi! I am your Booking Appointments Bot!\nI can help you book an appointment.\n\nYou can control me using these commands\n\n/start-to start chatting with the bot\n/cancel-to stop chatting with the bot.\n\nFor more information please contact MultiSpecialityHospital@gmail.com'
+    text_message='Hi! I am your Booking Appointments Bot!\nI can help you book an appointment.\n\nYou can control me using these commands\n\n/start-to start chatting with the bot\n\nFor more information please contact MultiSpecialityHospital@gmail.com'
     keyboard={'keyboard':[
                         [{'text':'General Physician'},{'text':'Cardiologist'}],
                         [{'text':'Dentist'},{'text':'Dermatologists'}],
@@ -56,9 +56,21 @@ def sendInlineMessageForService(chat_id):
     response = requests.get(url)
     return response
 
+def sendInlineMessageForDoctor(chat_id):
+    text_message='Available Doctors\n1.DOC A\n2.DOC B\n3.DOC C\n4.DOC D\n5.DOC E\n6.DOC F'
+    keyboard={'keyboard':[
+                        [{'text':'Doc A'},{'text':'Doc B'}],
+                        [{'text':'Doc C'},{'text':'Doc D'}],
+                        [{'text':'Doc E'},{'text':'Doc F'}]
+                        ]}
+    key=json.JSONEncoder().encode(keyboard)
+    url='https://api.telegram.org/bot'+str(api_key)+'/sendmessage?chat_id='+str(chat_id)+'&text='+str(text_message)+'&reply_markup='+key
+    response = requests.get(url)
+    return response    
+
 def sendInlineMessageForBookingTime(chat_id):
     text_message='Please choose a time slot...'
-    #text_message1='Available Doctors\n1.DOC A\n2.DOC B\n3.DOC C\n4.DOC D\n5.DOC E\n6.DOC F\n7.DOC G'
+   # text_message1='Available Doctors\n1.DOC A\n2.DOC B\n3.DOC C\n4.DOC D\n5.DOC E\n6.DOC F\n7.DOC G'
     current_time=datetime.datetime.now()
     current_hour=str(current_time)[11:13]
     # ----------- Chunk of if statement to determine which inline keyboard to reply user ----------------
@@ -90,25 +102,26 @@ def sendInlineMessageForBookingTime(chat_id):
                             ]}
     elif 16<=int(current_hour)<18:
         keyboard={'keyboard':[
-                            [{'text':'18:00'}],[{'text':'20:00'}],
+                            [{'text':'18:00'}],
                             ]}
-    elif 18<=int(current_hour)<20:
+    elif 18<=int(current_hour)<24:
         keyboard={'keyboard':[
                             [{'text':'20:00'}],
-                            ]}
+                            ]}                       
     else:
         return sendMessage(chat_id,'Please try again tomorrow')
     #----------------------------------------------------------------------------------------------------
     key=json.JSONEncoder().encode(keyboard)
     url='https://api.telegram.org/bot'+str(api_key)+'/sendmessage?chat_id='+str(chat_id)+'&text='+str(text_message)+'&reply_markup='+key
-    #url1='https://api.telegram.org/bot'+str(api_key)+'/sendmessage?chat_id='+str(chat_id)+'&text='+str(text_message1)+'&reply_markup='+key
+   # url1='https://api.telegram.org/bot'+str(api_key)+'/sendmessage?chat_id='+str(chat_id)+'&text='+str(text_message1)+'&reply_markup='+key
     response = requests.get(url)
-   # response = requests.get(url1)
+  #  response = requests.get(url1)
     return response
 
 
 def run():
     update_id_for_booking_of_time_slot=''
+    doc_name_update=''
     prev_last_msg,chat_id,prev_update_id=getLastMessage()
     while True:
         current_last_msg,chat_id,current_update_id=getLastMessage()
@@ -118,30 +131,34 @@ def run():
         else:
             if current_last_msg=='/start':
                 sendInlineMessageForService(chat_id)   
-            if current_last_msg=='/cancel':
-                sendMessage(chat_id,"Booking Cancel , /start to run bot again..!!")
             if current_last_msg in ['General Physician','Cardiologist','Dentist','Dermatologists','Gynecologists','Orthopedic Surgeons']:
                 event_description=current_last_msg
                 sendInlineMessageForBookingTime(chat_id)
             if current_last_msg in ['08:00','10:00','12:00','14:00','16:00','18:00','20:00']:
                 booking_time=current_last_msg
                 update_id_for_booking_of_time_slot=current_update_id
+                sendInlineMessageForDoctor(chat_id)
+            if current_last_msg in ['Doc A','Doc B','Doc C','Doc D','Doc E','Doc F']:
+                doc_name = current_last_msg
+                doc_name_update = current_update_id
                 sendMessage(chat_id,"Please enter email address:")
-            
-                update_id_for_booking_of_time_slot=''
+            if current_last_msg=='/cancel':
+               doc_name_update=''
                 # return
-                continue
-            if update_id_for_booking_of_time_slot!=current_update_id and update_id_for_booking_of_time_slot!= '':
+               continue
+            if doc_name_update!=current_update_id and doc_name_update!= '':
                 if check_email(current_last_msg)==True:
                     update_id_for_booking_of_time_slot=''
+                    doc_name_update=''
                     sendMessage(chat_id,"Booking please wait.....")
                     input_email=current_last_msg
-                    response=book_timeslot(event_description,booking_time,input_email)
+                    response=book_timeslot(event_description,booking_time,input_email,doc_name)
                     if response == True:
-                        sendMessage(chat_id,f"Appointment is booked. Take Care..!!\n\nSee you at {booking_time}")
+                        sendMessage(chat_id,f"Appointment is booked. for {doc_name} of {event_description} Department Take Care..!!\n\nSee you at {booking_time}\n\n/start- To Book New Appointment")
                         continue
                     else:
                         update_id_for_booking_of_time_slot=''
+                        doc_name_update=''
                         sendMessage(chat_id,"Please try another timeslot Or  try again tomorrow")
                         continue
                 else:
